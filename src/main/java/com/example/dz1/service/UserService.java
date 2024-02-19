@@ -10,15 +10,20 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    public User saveUser(User user){
+
+    public User saveUser(String name, int age) {
+        var user = User.builder()
+                .name(name)
+                .age(age)
+                .build();
         return userRepository.save(user);
     }
-    @Transactional
     public User getUserById(Long id){
         return userRepository.findById(id).orElseThrow(RuntimeException::new);
     }
+
     @Transactional
-    public void deleteUserById(Long id){
+    public void deleteUserById(Long id) {
         userRepository.deleteById(id);
     }
 }

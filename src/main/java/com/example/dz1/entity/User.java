@@ -1,13 +1,15 @@
 package com.example.dz1.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "user_ref")
 @Getter
 @Setter
-@Entity
-@Table(name = "user_ref")
+@Builder
 public class User {
     @Id
     @SequenceGenerator(name = "generator", sequenceName = "user_ref_id_seq", allocationSize = 1)
