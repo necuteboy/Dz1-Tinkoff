@@ -4,10 +4,43 @@ type User{
     age: Int!
 }
 
+type ResponseMessage {
+    id: Int,
+    author: String,
+    text: String,
+    creationDate: String,
+    images: [ResponseImage]
+}
+type ResponseImage {
+    filename: String,
+    size: Int,
+    reference: String
+}
+input OperationDto {
+    type: String,
+    time: String
+}
+
+type ResponseOperation {
+    type: String,
+    message: String,
+    time: String
+}
+
+input CreateMessage {
+    author: String!,
+    text: String!,
+    images: [String]
+}
+
 type Query {
-    getUser(id: ID!): User
+    getMessages: [ResponseMessage],
+    getMessage(id: Int!): ResponseMessage,
+    getMetas: [ResponseImage],
+    getMeta(reference: String!): ResponseImage,
+    getOperations(filter: OperationDto): [ResponseOperation]
 }
 
 type Mutation {
-    saveUser(name: String!, age: Int!): User
+    createMessage(message: CreateMessage!): ResponseMessage
 }

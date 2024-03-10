@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2024-create-images-v1" author="Sergey Andreychikov">
+        <preConditions>
+            <not>
+                <tableExists tableName="image_ref"/>
+            </not>
+        </preConditions>
+        <createTable tableName="image_ref">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints
+                        primaryKey="true"/>
+            </column>
+            <column name="filename" type="VARCHAR">
+                <constraints
+                        nullable="false"/>
+            </column>
+            <column name="size" type="BIGINT">
+                <constraints
+                        nullable="false"/>
+            </column>
+            <column name="reference" type="VARCHAR">
+                <constraints
+                        nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
