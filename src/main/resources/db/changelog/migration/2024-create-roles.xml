@@ -3,23 +3,26 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
-    <changeSet id="2024-create-user-v1" author="Sergey Andreychikov">
+    <changeSet id="2024-create-roles" author="Sergey Andreychikov">
         <preConditions>
             <not>
-                <tableExists tableName="user_ref"/>
+                <tableExists tableName="roles_jn"/>
             </not>
         </preConditions>
-        <createTable tableName="user_ref">
+        <createTable tableName="roles_jn">
             <column name="id" type="serial" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="name" type="varchar(255)" defaultValue="null"/>
-            <column name="age" type="bigint" defaultValue="null"/>
-            <column name="role" type="varchar(255)" defaultValue="null"/>
-            <column name="password" type="varchar(255)" defaultValue="null"/>
+            <column name="name" type="varchar(255)"/>
         </createTable>
         <sql>
-            alter table user_ref
+            insert into roles_jn (name)
+            VALUES ('ROLE_USER');
+            insert into roles_jn (name)
+            VALUES ('ROLE_ADMIN');
+        </sql>
+        <sql>
+            alter table roles_jn
                 add constraint name_length_check check ( length(name) > 0 );
         </sql>
     </changeSet>
