@@ -5,6 +5,7 @@ import com.example.dz1.entity.mongo.Operation;
 import com.example.dz1.entity.mongo.OperationType;
 import com.example.dz1.repository.ImageRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,7 +24,9 @@ public class ImageService {
 
     @Cacheable(value = "ImageService::getMeta", key = "#image.reference")
     @CacheEvict(value = "ImageService::getAllMeta", allEntries = true)
+    @Transactional
     public Image saveMeta(Image image) {
+        var response = imageRepository.save(image);
         operationService.logOperation(
                 Operation.builder()
                         .message(String.format("Meta for %s saved to database", image.getReference()))
@@ -32,7 +35,7 @@ public class ImageService {
                         .build()
         );
 
-        return imageRepository.save(image);
+        return response;
     }
 
     @Cacheable(value = "ImageService::getAllMeta")
