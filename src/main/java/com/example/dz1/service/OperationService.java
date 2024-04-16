@@ -6,7 +6,6 @@ import com.example.dz1.entity.mongo.QOperation;
 import com.querydsl.core.BooleanBuilder;
 import com.example.dz1.repository.OperationRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,6 @@ public class OperationService {
 
     private final OperationRepository repository;
 
-    @CacheEvict(value = "OperationService::getOperations", allEntries = true)
     public void logOperation(Operation operation) {
         repository.save(operation);
     }
